@@ -1,4 +1,4 @@
-body.transition{
+body.hfscarousel-transition{
   transition: opacity {DELAY}s ease;
 }
 
@@ -6,6 +6,6 @@ body{
   opacity: 1 !important;
 }
 
-body.carousel-hidden {
+body.hfscarousel-hidden {
   opacity: 0 !important;
 }

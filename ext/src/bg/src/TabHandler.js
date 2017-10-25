@@ -9,7 +9,7 @@ export default class TabHandler {
     this.activeTabIndex = activeTabIndex;
     this.nextTabIndex = (activeTabIndex + 1) % this.tabs.length;
     
-    this.tabIsLoaded = this.tabs.map(tab => {
+    this.tabIsLoaded = this.tabs.map(() => {
       return { lastLoaded: 0, isLoaded: false };
     });
   }

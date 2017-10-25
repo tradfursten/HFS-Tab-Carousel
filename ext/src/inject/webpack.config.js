@@ -37,6 +37,7 @@ module.exports = (ROOT_DIR) => {
     resolve: {
       modules: [
         resolve(__dirname),
+        resolve(ROOT_DIR),
         'node_modules'
       ]
     }

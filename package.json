@@ -1,14 +1,13 @@
 {
-  "name": "tabcarousel2",
-  "version": "1.0.0",
+  "name": "HFS-Tab-Carousel",
+  "version": "0.0.2",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
-    "watch": "webpack --watch"
+    "watch": "webpack --watch",
+    "eslint": "eslint -c .eslintrc ext/"
   },
-  "author": "",
+  "author": "gson88",
   "license": "ISC",
   "devDependencies": {
     "babel-core": "^6.26.0",

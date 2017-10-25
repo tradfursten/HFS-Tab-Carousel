@@ -1,29 +1,30 @@
-import main from './src/main';
-import { setDefaultSettings } from '../shared/settings';
-const instance = main(chrome);
+import WorkerHandler from 'src/WorkerHandler';
+import { setDefaultSettings } from 'ext/src/shared/settings';
+import constants from 'ext/src/shared/constants';
+const workerHandler = WorkerHandler(chrome);
 
-chrome.extension.onMessage.addListener((msg, sender, sendResponse) => {
-  console.log('onMessage', msg);
+/**
+ * On message from browser popup
+ */
+const onMessage = (msg, sender, sendResponse) => {
+  const isRunning = workerHandler.isRunning();
   
   switch(msg.type) {
-    case 'INIT': {
-      sendResponse({
-        isRunning: instance.isRunning()
-      });
-      break;
-    }
+    case constants.POPUP_INIT:
+      return sendResponse({ isRunning });
     
-    case 'TOGGLE_START_STOP': {
-      const isRunning = instance.isRunning();
+    case constants.TOGGLE_START_STOP: {
+      let promise;
       if(isRunning) {
-        instance.stop();
+        promise = workerHandler.stop();
       } else {
-        instance.run();
+        promise = workerHandler.run();
       }
-      sendResponse({ isRunning: !isRunning });
-      break;
+      promise.then(running => sendResponse({ isRunning: running }));
+      return true;
     }
   }
-});
+};
 
 chrome.runtime.onInstalled.addListener(setDefaultSettings);
+chrome.runtime.onMessage.addListener(onMessage);

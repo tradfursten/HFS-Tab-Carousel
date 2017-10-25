@@ -1,7 +1,7 @@
-import settings from '../../shared/settings';
-import TabHandler from './TabHandler';
-import constants from '../../shared/constants';
-import getCss from './utils/getCssString';
+import settings from 'ext/src/shared/settings';
+import constants from 'ext/src/shared/constants';
+import TabHandler from 'src/TabHandler';
+import getCss from 'src/utils/getCssString';
 
 export default class Worker {
   constructor(chrome) {
@@ -21,6 +21,9 @@ export default class Worker {
     this.tabHandler.setTabs(validTabs, activeTabIndex);
     this.setTickTimeout();
     this.bindEvents();
+    this.chrome.browserAction.setIcon({ path: 'icons/icon19-running.png' });
+    this.chrome.browserAction.setTitle({ title: 'Carousel running' });
+    return true;
   }
   
   setTickTimeout() {
@@ -36,6 +39,9 @@ export default class Worker {
     clearTimeout(this.timeoutId);
     this.timeoutId = undefined;
     this.unbindEvents();
+    this.chrome.browserAction.setIcon({ path: 'icons/icon19-stopped.png' });
+    this.chrome.browserAction.setTitle({ title: 'Carousel stopped' });
+    return false;
   }
   
   tick() {
@@ -112,5 +118,4 @@ export default class Worker {
       this.chrome.tabs.executeScript(tabId, { file: 'js/inject/inject.min.js' } );
     }
   }
-
 }
