@@ -1,0 +1,27 @@
+{
+  "name": "HFS Tab Carousel",
+  "version": "0.0.1",
+  "manifest_version": 2,
+  "description": "Switch between tabs every x seconds. With fade in/out effects",
+  "homepage_url": "http://google.com",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "background": {
+    "scripts": ["js/bg/background.min.js"]
+  },
+  "options_page": "js/options/index.html",
+  "browser_action": {
+    "default_icon": "icons/icon19-stopped.png",
+    "default_popup": "js/browser_action/browser_action.html",
+    "default_title": "Start carousel"
+  },
+  "permissions": [
+    "tabs",
+    "http://*/*",
+    "https://*/*"
+  ],
+  "web_accessible_resources": ["js/inject/inject.min.js"]
+}

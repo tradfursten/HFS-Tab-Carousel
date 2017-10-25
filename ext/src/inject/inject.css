@@ -1,0 +1,11 @@
+body.transition{
+  transition: opacity {DELAY}s ease;
+}
+
+body{
+  opacity: 1 !important;
+}
+
+body.carousel-hidden {
+  opacity: 0 !important;
+}

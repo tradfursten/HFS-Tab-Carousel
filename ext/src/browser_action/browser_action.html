@@ -1,0 +1,44 @@
+<!doctype html>
+<head>
+  <style type="text/css">
+    .setting{
+      margin-bottom: 20px;
+    }
+    .setting label{
+      display: block;
+    }
+    #mainPopup {
+      padding: 10px;
+      height: 200px;
+      width: 200px;
+      font-family: Helvetica, Ubuntu, Arial, sans-serif;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="mainPopup">
+    <form id="options-form">
+      <div class="setting">
+        <label for="TAB_TIME">Sec each page shows:</label>
+        <input type="text" id="TAB_TIME"/>
+      </div>
+
+      <div class="setting">
+        <label for="FADE_IN_OUT_TIME">Fade in/out time:</label>
+        <input type="text" id="FADE_IN_OUT_TIME"/>
+      </div>
+
+      <div class="setting">
+        <label for="RELOAD_FREQUENCY">Reload pages every x sec:</label>
+        <input type="text" id="RELOAD_FREQUENCY"/>
+      </div>
+      <input type="submit" value="Save settings"/>
+    </form>
+
+    <button id="toggleActiveBtn">
+      Start
+    </button>
+    <script src="./browser_action.min.js"></script>
+  </div>
+</body>
