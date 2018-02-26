@@ -12,7 +12,6 @@
   "background": {
     "scripts": ["js/bg/background.min.js"]
   },
-  "options_page": "js/options/index.html",
   "browser_action": {
     "default_icon": "icons/icon19-stopped.png",
     "default_popup": "js/browser_action/browser_action.html",
