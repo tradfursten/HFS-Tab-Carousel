@@ -5,7 +5,10 @@ const getValidTabsInActiveWindow = () => {
       
       //Get index of active tab in array
       const activeTabIndex = validTabs.reduce(findActiveTabReducer, 0);
-      resolve({validTabs, activeTabIndex});
+      resolve({
+        validTabs,
+        activeTabIndex
+      });
     });
   });
 };
