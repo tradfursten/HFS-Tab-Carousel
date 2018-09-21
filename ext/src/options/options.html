@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title id="title"></title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Helvetica, Ubuntu, Arial, sans-serif;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .settings {
+      width: 200px;
+      text-align: center;
+    }
+
+    .setting {
+      margin-bottom: 20px;
+    }
+
+    .large {
+      padding: 0.5rem;
+      font-size: 18px;
+    }
+
+    .setting label {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="settings">
+      <form id="options-form">
+        <div class="setting">
+          <label for="TAB_TIME">Sec each page shows:</label>
+          <input type="text" id="TAB_TIME" class="large" />
+        </div>
+
+        <div class="setting">
+          <label for="FADE_IN_OUT_TIME">Fade in/out time:</label>
+          <input type="text" id="FADE_IN_OUT_TIME" class="large" />
+        </div>
+
+        <div class="setting">
+          <label for="RELOAD_FREQUENCY">Reload pages every x sec:</label>
+          <input type="text" id="RELOAD_FREQUENCY" class="large"/>
+        </div>
+        <input type="submit" value="Save settings" class="large" />
+      </form>
+    </div>
+  </div>
+  <script src="./options.min.js"></script>
+</body>
+</html>

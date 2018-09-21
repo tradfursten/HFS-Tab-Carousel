@@ -6,7 +6,7 @@ module.exports = (ROOT_DIR) => {
     mode: 'development',
     entry: [
       '@babel/polyfill',
-      join(__dirname, 'browser_action.js')
+      join(__dirname, 'options.js')
     ],
     module: {
       rules: [
@@ -16,8 +16,8 @@ module.exports = (ROOT_DIR) => {
       ]
     },
     output: {
-      path: join(ROOT_DIR, 'out/js/browser_action'),
-      filename: 'browser_action.min.js'
+      path: join(ROOT_DIR, 'out/js/options'),
+      filename: 'options.min.js'
     },
     resolve: {
       modules: [

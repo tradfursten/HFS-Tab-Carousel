@@ -1,4 +1,5 @@
 module.exports = {
   js: require('./js'),
-  css: require('./css')
+  css: require('./css'),
+  html: require('./html')
 };

@@ -18,6 +18,7 @@
     "default_popup": "js/browser_action/browser_action.html",
     "default_title": "Start carousel"
   },
+  "options_page": "js/options/options.html",
   "permissions": [
     "tabs",
     "http://*/*",

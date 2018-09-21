@@ -8,6 +8,11 @@ export default () => {
   };
 };
 
+export const setSettings = ({ TAB_TIME, FADE_IN_OUT_TIME, RELOAD_FREQUENCY }) => {
+  localStorage.setItem('TAB_TIME', TAB_TIME);
+  localStorage.setItem('FADE_IN_OUT_TIME', FADE_IN_OUT_TIME);
+  localStorage.setItem('RELOAD_FREQUENCY', RELOAD_FREQUENCY);
+};
 
 export const setDefaultSettings = () => {
   localStorage.setItem('TAB_TIME', 15);
