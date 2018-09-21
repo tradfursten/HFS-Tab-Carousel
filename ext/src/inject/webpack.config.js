@@ -23,8 +23,9 @@ const rules = [
 
 module.exports = (ROOT_DIR) => {
   return {
+    mode: 'development',
     entry: [
-      'babel-polyfill',
+      '@babel/polyfill',
       join(__dirname, 'inject.js')
     ],
     module: {

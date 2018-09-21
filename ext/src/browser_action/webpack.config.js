@@ -3,8 +3,9 @@ const { js, css } = require('../webpack/rules/index');
 
 module.exports = (ROOT_DIR) => {
   return {
+    mode: 'development',
     entry: [
-      'babel-polyfill',
+      '@babel/polyfill',
       join(__dirname, 'browser_action.js')
     ],
     module: {

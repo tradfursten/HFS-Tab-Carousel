@@ -3,8 +3,9 @@ const { js, css } = require('../webpack/rules/index');
 
 module.exports = (ROOT_DIR) => {
   return {
-   entry: [
-      'babel-polyfill',
+    mode: 'development',
+    entry: [
+      '@babel/polyfill',
       join(__dirname, 'background.js')
     ],
     module: {

@@ -4,7 +4,10 @@ module.exports = {
   use: {
     loader: 'babel-loader',
     options: {
-      presets: ['env']
+      presets: ['env'],
+      plugins: [
+        ['@babel/plugin-proposal-class-properties']
+      ]
     }
   }
 };
