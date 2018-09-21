@@ -1,7 +1,8 @@
 {
   "name": "HFS Tab Carousel",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "manifest_version": 2,
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
   "description": "Switch between tabs every x seconds. With fade in/out effects",
   "homepage_url": "http://google.com",
   "icons": {

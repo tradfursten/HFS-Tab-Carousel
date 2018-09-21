@@ -1,8 +1,8 @@
-body.hfscarousel-transition{
+body.hfscarousel-transition {
   transition: opacity {DELAY}s ease;
 }
 
-body{
+body {
   opacity: 1 !important;
 }
 

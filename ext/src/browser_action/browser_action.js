@@ -6,18 +6,21 @@ const q = document.querySelector.bind(document);
 let form, button, tab_time, fade_in_out_time, reload_frequency;
 bindElements();
 bindEvents();
-
-chrome.extension.sendMessage({ type: constants.POPUP_INIT }, (resp) => {
-  if(resp.isRunning) {
-    sendToggleStartStop();
-  }
+sendMessage({ type: constants.POPUP_INIT }, resp => {
+  console.log('response', resp);
+  toggleButtonText(resp.isRunning);
 });
 
-const sendToggleStartStop = () => {
-  chrome.runtime.sendMessage({ type: constants.TOGGLE_START_STOP }, (resp) => {
+function sendMessage (msg, cb) {
+  console.log('sending message', msg);
+  chrome.extension.sendMessage(msg, cb);
+}
+
+function sendToggleStartStop () {
+  sendMessage({ type: constants.TOGGLE_START_STOP }, resp => {
     toggleButtonText(resp.isRunning);
   });
-};
+}
 
 const toggleButtonText = (isRunning) => {
   button.innerHTML = isRunning ? 'Stop' : 'Start';
@@ -32,7 +35,7 @@ const fillForm = () => {
 function bindElements() {
   form = q('#options-form');
   button = q('#toggleActiveBtn');
-  
+
   tab_time = q('#TAB_TIME');
   fade_in_out_time = q('#FADE_IN_OUT_TIME');
   reload_frequency = q('#RELOAD_FREQUENCY');
@@ -44,7 +47,7 @@ function bindEvents() {
     localStorage.setItem('FADE_IN_OUT_TIME', fade_in_out_time.value);
     localStorage.setItem('RELOAD_FREQUENCY', reload_frequency.value);
   };
-  
+
   button.onclick = () => sendToggleStartStop();
 }
 
