@@ -4,7 +4,7 @@ import TabHandler from 'src/TabHandler';
 import getCss from 'src/utils/getCssString';
 
 export default class Worker {
-  constructor(chrome) {
+  constructor (chrome) {
     this.chrome = chrome;
     this.tabHandler = new TabHandler();
     this.isRunning = false;
@@ -24,7 +24,7 @@ export default class Worker {
     return true;
   }
 
-  setTickTimeout() {
+  setTickTimeout () {
     if (!this.isRunning) {
       return;
     }
@@ -35,7 +35,7 @@ export default class Worker {
     }, this.settings.TAB_TIME * 1000);
   }
 
-  stop() {
+  stop () {
     console.log('worker stopping');
     this.isRunning = false;
     this.timeoutId = clearTimeout(this.timeoutId);
@@ -49,7 +49,7 @@ export default class Worker {
     return false;
   }
 
-  tick() {
+  tick () {
     const activeTabId = this.tabHandler.getActiveTabId();
     let nextTabId = this.tabHandler.getNextTabId();
 
@@ -62,37 +62,37 @@ export default class Worker {
     });
   }
 
-  fadeOut(tabId, cb) {
+  fadeOut (tabId, cb) {
     this.chrome.tabs.sendMessage(tabId, { type: constants.FADE_OUT });
     this.timeoutId = setTimeout(cb, this.settings.FADE_IN_OUT_TIME * 1000);
   }
 
-  switchToTab(tabId, callback) {
+  switchToTab (tabId, callback) {
     this.chrome.tabs.update(tabId, { selected: true }, callback);
   }
 
-  fadeIn(tabId, cb) {
+  fadeIn (tabId, cb) {
     console.log('sending message to tab to fade in', tabId);
     this.chrome.tabs.sendMessage(tabId, { type: constants.FADE_IN });
     this.timeoutId = setTimeout(cb, this.settings.FADE_IN_OUT_TIME * 1000);
   }
 
-  updateLastTimeTabLoaded(tabId, isLoaded) {
+  updateLastTimeTabLoaded (tabId, isLoaded) {
     return this.tabHandler.updateLastTimeTabLoaded(tabId, isLoaded);
   }
 
-  reloadTabIfNeeded(tabId) {
+  reloadTabIfNeeded (tabId) {
     console.log('reloadTabIfNeeded');
     const msecSinceReload = this.tabHandler.getMsecSinceReload(tabId);
     console.log('lastReloaded:', msecSinceReload, 'reload setting:', this.settings.RELOAD_FREQUENCY * 1000);
 
-    if(msecSinceReload > (this.settings.RELOAD_FREQUENCY * 1000)) {
+    if (msecSinceReload > (this.settings.RELOAD_FREQUENCY * 1000)) {
       console.log('Reloading tab', tabId);
       this.chrome.tabs.reload(tabId);
     }
   }
 
-  bindChromeEvents() {
+  bindChromeEvents () {
     //Closing tab
     this.chrome.tabs.onRemoved.addListener(this.onTabClose);
 
@@ -107,7 +107,7 @@ export default class Worker {
     this.chrome.browserAction.setTitle({ title: title });
   }
 
-  unbindEvents() {
+  unbindEvents () {
     this.chrome.tabs.onRemoved.removeListener(this.onTabClose);
     this.chrome.tabs.onUpdated.removeListener(this.onTabUpdated);
     this.chrome.tabs.onActivated.removeListener(this.onTabActivated);
@@ -124,7 +124,7 @@ export default class Worker {
     const isLoaded = info.status === 'complete';
     this.updateLastTimeTabLoaded(tabId, isLoaded);
 
-    if(isLoaded) {
+    if (isLoaded) {
       console.log('injecting js/css on tab', tabId);
       this.chrome.tabs.insertCSS(tabId, { code: getCss() } );
       this.chrome.tabs.executeScript(tabId, { file: 'js/inject/inject.min.js' } );

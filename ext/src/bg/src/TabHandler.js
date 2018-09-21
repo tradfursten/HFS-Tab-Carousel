@@ -3,7 +3,7 @@ export default class TabHandler {
     this.setTabs([], 0);
   }
 
-  setTabs(tabs, activeTabIndex) {
+  setTabs (tabs, activeTabIndex) {
     this.tabs = tabs;
     this.tabIds = tabs.map(tab => tab.id);
     this.activeTabIndex = activeTabIndex;
@@ -21,29 +21,29 @@ export default class TabHandler {
   updateLastTimeTabLoaded (tabId, isLoaded) {
     const index = this.getTabIndex(tabId);
     this.lastTimeTabUpdated[index].isLoaded = isLoaded;
-    if(isLoaded) {
+    if (isLoaded) {
       this.lastTimeTabUpdated[index].lastLoaded = Date.now();
     }
   }
 
-  getTabIndex(tabId) {
+  getTabIndex (tabId) {
     return this.tabIds.indexOf(tabId);
   }
 
-  getActiveTabId() {
+  getActiveTabId () {
     return this.tabIds[this.activeTabIndex];
   }
 
-  getNextTabId() {
+  getNextTabId () {
     return this.tabIds[this.nextTabIndex];
   }
 
-  incrementTabs() {
+  incrementTabs () {
     this.activeTabIndex = this.nextTabIndex;
     this.nextTabIndex = (this.nextTabIndex + 1) % this.tabs.length;
   }
 
-  getMsecSinceReload(tabId) {
+  getMsecSinceReload (tabId) {
     const index = this.getTabIndex(tabId);
     return Date.now() - this.lastTimeTabUpdated[index].lastLoaded;
   }

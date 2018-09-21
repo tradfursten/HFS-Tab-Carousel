@@ -7,7 +7,7 @@ export default (chrome) => {
     getValidTabsAndRun: async () => {
       const { validTabs, activeTabIndex } = await ChromeHelper.getValidTabsInActiveWindow();
 
-      if(validTabs.length < 2) {
+      if (validTabs.length < 2) {
         alert('Not enough tabs found, aborting');
         return false;
       }

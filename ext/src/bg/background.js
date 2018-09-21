@@ -10,13 +10,13 @@ const onMessage = (msg, sender, sendResponse) => {
   const isRunning = workerHandler.isRunning();
   console.log('received msg:', { msg, sender });
 
-  switch(msg.type) {
+  switch (msg.type) {
     case constants.POPUP_INIT:
       return sendResponse({ isRunning });
 
     case constants.TOGGLE_START_STOP: {
       let promise;
-      if(isRunning) {
+      if (isRunning) {
         promise = workerHandler.stop();
       } else {
         promise = workerHandler.getValidTabsAndRun();
