@@ -1,25 +1,5 @@
 const { join, resolve } = require('path');
-
-const rules = [
-  {
-    test: /\.js$/,
-    exclude: /node_modules/,
-    use: {
-      loader: 'babel-loader',
-      options: {
-        presets: ['env']
-      }
-    }
-  },
-  {
-    test: /\.css$/,
-    exclude: /node_modules/,
-    use: {
-      loader: 'raw-loader'
-    }
-  }
-];
-
+const { js, css } = require('../webpack/rules/index');
 
 module.exports = (ROOT_DIR) => {
   return {
@@ -28,7 +8,10 @@ module.exports = (ROOT_DIR) => {
       join(__dirname, 'browser_action.js')
     ],
     module: {
-      rules: rules
+      rules: [
+        js,
+        css
+      ]
     },
     output: {
       path: join(ROOT_DIR, 'out/js/browser_action'),
