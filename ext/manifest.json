@@ -11,7 +11,7 @@
     "128": "icons/icon128.png"
   },
   "background": {
-    "scripts": ["js/bg/background.min.js"]
+    "scripts": ["js/background/background.min.js"]
   },
   "browser_action": {
     "default_icon": "icons/icon19-stopped.png",

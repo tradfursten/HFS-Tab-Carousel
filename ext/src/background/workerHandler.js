@@ -1,5 +1,5 @@
-import Worker from 'src/Worker';
-import ChromeHelper from 'src/utils/chrome';
+import Worker from './Worker';
+import ChromeHelper from './utils/chrome';
 
 export default (chrome) => {
   const worker = new Worker(chrome);

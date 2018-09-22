@@ -1,11 +1,11 @@
-import constants from 'ext/src/shared/constants';
+import constants from 'shared/constants';
 
 ((chrome, document) => {
   const run = () => {
     const body = document.body;
     body.className = `${body.className} hfscarousel-hidden`;
 
-    //Try to fix bug when page is not with opacity=0 when tab is activated
+    //Try to fix bug when page doesn't have opacity=0 when tab is activated
     setTimeout(() => {
       body.className = `${body.className} hfscarousel-transition`;
     }, 100);

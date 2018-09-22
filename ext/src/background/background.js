@@ -1,6 +1,6 @@
-import WorkerHandler from 'src/WorkerHandler';
-import { setDefaultSettings } from 'ext/src/shared/settings';
-import constants from 'ext/src/shared/constants';
+import WorkerHandler from './WorkerHandler';
+import { setDefaultSettings } from 'shared/settings';
+import constants from 'shared/constants';
 const workerHandler = WorkerHandler(chrome);
 
 /**

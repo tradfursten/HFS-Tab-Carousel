@@ -1,17 +1,54 @@
-const bg = require('./ext/src/bg/webpack.config');
-const browserAction = require('./ext/src/browser_action/webpack.config');
-const inject = require('./ext/src/inject/webpack.config');
-const options = require('./ext/src/options/webpack.config');
+const { join, resolve } = require('path');
+const { js, css, html } = require('./ext/src/webpack/rules/index');
 const fs = require('fs');
 
-module.exports = [
-  bg(__dirname),
-  browserAction(__dirname),
-  inject(__dirname),
-  options(__dirname)
-];
+const ROOT_DIR = __dirname;
+const SRC_DIR = join(__dirname, 'ext/src');
+const BACKGROUND_DIR = join(SRC_DIR, 'background');
+const BROWSER_ACTION_DIR = join(SRC_DIR, 'browser_action');
+const INJECT_DIR = join(SRC_DIR, 'inject');
+const OPTIONS_DIR = join(SRC_DIR, 'options');
 
 watchManifestFile();
+
+module.exports = {
+  mode: 'development',
+  entry: {
+    background: [
+      '@babel/polyfill',
+      join(BACKGROUND_DIR, 'background.js')
+    ],
+
+    browser_action: [
+      join(BROWSER_ACTION_DIR, 'browser_action.js')
+    ],
+
+    inject: [
+      join(INJECT_DIR, 'inject.js')
+    ],
+
+    options: [
+      join(OPTIONS_DIR, 'options.js')
+    ]
+  },
+  module: {
+    rules: [
+      js,
+      css,
+      html
+    ]
+  },
+  output: {
+    path: join(ROOT_DIR, 'out/js'),
+    filename: '[name]/[name].min.js'
+  },
+  resolve: {
+    modules: [
+      resolve(SRC_DIR),
+      'node_modules'
+    ]
+  }
+};
 
 function watchManifestFile () {
   const writeManifestFile = () => {

@@ -1,7 +1,7 @@
-import getSettings from 'ext/src/shared/settings';
-import constants from 'ext/src/shared/constants';
-import TabHandler from 'src/TabHandler';
-import getCss from 'src/utils/getCssString';
+import getSettings from 'shared/settings';
+import constants from 'shared/constants';
+import TabHandler from './TabHandler';
+import getCss from './utils/getCssString';
 
 export default class Worker {
   constructor (chrome) {
@@ -14,8 +14,8 @@ export default class Worker {
   }
 
   start (validTabs, activeTabIndex) {
-    console.log('Worker starting');
     this.settings = getSettings();
+    console.log('Worker starting, settings:', this.settings);
     this.isRunning = true;
     this.tabHandler.setTabs(validTabs, activeTabIndex);
     this.setChromeIcon('icons/icon19-running.png', 'Carousel running');
@@ -28,8 +28,10 @@ export default class Worker {
     if (!this.isRunning) {
       return;
     }
+    const nextTabId = this.tabHandler.getNextTabId();
 
-    this.reloadTabIfNeeded(this.tabHandler.getNextTabId());
+    this.reloadTabIfNeeded(nextTabId);
+
     this.timeoutId = setTimeout(() => {
       this.tick();
     }, this.settings.TAB_TIME * 1000);
@@ -55,26 +57,41 @@ export default class Worker {
 
     this.tabHandler.incrementTabs();
 
-    //Send fade out command to active tab
+    this.fadeOutAndSwitchToNextTab(activeTabId, nextTabId);
+  }
+
+  /**
+   * @param activeTabId
+   * @param nextTabId
+   */
+  fadeOutAndSwitchToNextTab (activeTabId, nextTabId) {
     this.fadeOut(activeTabId, () => {
       this.isOwnActiveEvent = true;
-      this.switchToTab(nextTabId, () => { this.isOwnActiveEvent = false; });
+
+      this.switchToTab(nextTabId, () => {
+        this.isOwnActiveEvent = false;
+      });
     });
   }
 
-  fadeOut (tabId, cb) {
+  fadeOut (tabId, onAfterFadeOut) {
     this.chrome.tabs.sendMessage(tabId, { type: constants.FADE_OUT });
-    this.timeoutId = setTimeout(cb, this.settings.FADE_IN_OUT_TIME * 1000);
+
+    if (onAfterFadeOut) {
+      this.timeoutId = setTimeout(onAfterFadeOut, this.settings.FADE_IN_OUT_TIME * 1000);
+    }
   }
 
   switchToTab (tabId, callback) {
     this.chrome.tabs.update(tabId, { selected: true }, callback);
   }
 
-  fadeIn (tabId, cb) {
-    console.log('sending message to tab to fade in', tabId);
+  fadeIn (tabId, onAfterFadeIn) {
     this.chrome.tabs.sendMessage(tabId, { type: constants.FADE_IN });
-    this.timeoutId = setTimeout(cb, this.settings.FADE_IN_OUT_TIME * 1000);
+
+    if (onAfterFadeIn) {
+      this.timeoutId = setTimeout(onAfterFadeIn, this.settings.FADE_IN_OUT_TIME * 1000);
+    }
   }
 
   updateLastTimeTabLoaded (tabId, isLoaded) {
@@ -126,18 +143,23 @@ export default class Worker {
 
     if (isLoaded) {
       console.log('injecting js/css on tab', tabId);
-      this.chrome.tabs.insertCSS(tabId, { code: getCss() } );
-      this.chrome.tabs.executeScript(tabId, { file: 'js/inject/inject.min.js' } );
+      this.injectScriptAndCss(tabId);
     }
   };
 
+  injectScriptAndCss (tabId) {
+    this.chrome.tabs.insertCSS(tabId, { code: getCss() } );
+    this.chrome.tabs.executeScript(tabId, { file: 'js/inject/inject.min.js' } );
+  }
+
   onTabActivated = activeInfo => {
-    console.log('tabs.onActivated', activeInfo);
     if (!this.isOwnActiveEvent) {
-      console.log('tab switched without own event, stopping');
+      console.log('Tab switched without own event, stopping');
       return this.stop();
     }
 
-    this.fadeIn(activeInfo.tabId, () => this.setTickTimeout());
+    this.fadeIn(activeInfo.tabId, () => {
+      this.setTickTimeout();
+    });
   };
 }

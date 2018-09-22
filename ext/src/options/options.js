@@ -1,5 +1,5 @@
 import './options.html';
-import getSettings, { setSettings } from 'ext/src/shared/settings';
+import getSettings, { setSettings } from 'shared/settings';
 const form = document.querySelector('#options-form');
 const TAB_TIME = document.querySelector('#TAB_TIME');
 const FADE_IN_OUT_TIME = document.querySelector('#FADE_IN_OUT_TIME');
