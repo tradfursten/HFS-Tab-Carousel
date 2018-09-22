@@ -1,5 +1,5 @@
-import getSettings from 'shared/settings';
-import constants from 'shared/constants';
+import getSettings from 'root/shared/settings';
+import constants from 'root/shared/constants';
 import TabHandler from './TabHandler';
 import getCss from './utils/getCssString';
 

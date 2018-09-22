@@ -1,4 +1,4 @@
-import constants from 'shared/constants';
+import constants from 'root/shared/constants';
 
 ((chrome, document) => {
   const run = () => {

@@ -43,10 +43,10 @@ module.exports = {
     filename: '[name]/[name].min.js'
   },
   resolve: {
-    modules: [
-      resolve(SRC_DIR),
-      'node_modules'
-    ]
+    alias: {
+      'root': resolve(SRC_DIR)
+    },
+    modules: [ 'node_modules' ]
   }
 };
 

@@ -1,5 +1,5 @@
 import './browser_action.html';
-import constants from 'shared/constants';
+import constants from 'root/shared/constants';
 const $ = document.querySelector.bind(document);
 
 let button =  $('#toggleActiveBtn');
