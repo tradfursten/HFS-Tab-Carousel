@@ -1,5 +1,5 @@
 const { join, resolve } = require('path');
-const { js, css, html } = require('./ext/src/webpack/rules/index');
+const { js, css, html } = require('./webpack/rules/index');
 const fs = require('fs');
 
 const ROOT_DIR = __dirname;
