@@ -1,7 +1,6 @@
-import WorkerHandler from './WorkerHandler';
 import { setDefaultSettings } from 'root/shared/settings';
 import constants from 'root/shared/constants';
-const workerHandler = WorkerHandler(chrome);
+const workerHandler = require('./WorkerHandler')(chrome);
 
 /**
  * On message from browser popup

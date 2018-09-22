@@ -7,6 +7,9 @@
     }
 
     #mainPopup {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
       text-align: center;
       padding: 20px;
       width: 200px;
@@ -16,6 +19,12 @@
 
     #toggleActiveBtn {
       padding: 1rem;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    #settingsLink {
+      font-size: 0.6rem;
     }
   </style>
 </head>
@@ -25,6 +34,8 @@
     <button id="toggleActiveBtn">
       Start
     </button>
+
+    <a id="settingsLink" href="#">Change settings</a>
     <script src="./browser_action.min.js"></script>
   </div>
 </body>
