@@ -21,8 +21,8 @@ const onMessage = (msg, sender, sendResponse) => {
         promise = workerHandler.stop();
       }
 
-      promise.then(running => {
-        return sendResponse({ isRunning: running });
+      promise.then(isRunning => {
+        return sendResponse({ isRunning });
       });
       return true;
     }

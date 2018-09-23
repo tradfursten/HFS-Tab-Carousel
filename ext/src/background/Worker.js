@@ -13,15 +13,29 @@ export default class Worker {
     this.isOwnActiveEvent = false;
   }
 
-  start (validTabs, activeTabIndex) {
+  /**
+   * @returns {Worker}
+   */
+  start () {
     this.settings = getSettings();
     console.log('Worker starting, settings:', this.settings);
     this.isRunning = true;
-    this.tabHandler.setTabs(validTabs, activeTabIndex);
     this.setChromeIcon('icons/icon19-running.png', 'Carousel running');
     this.bindChromeEvents();
     this.setTickTimeout();
-    return true;
+    return this;
+  }
+
+  getIsRunning () {
+    return this.isRunning;
+  }
+
+  /**
+   * @returns {Worker}
+   */
+  setTabs (tabs, activeTabIndex) {
+    this.tabHandler.setTabs(tabs, activeTabIndex);
+    return this;
   }
 
   setTickTimeout () {
@@ -37,6 +51,9 @@ export default class Worker {
     }, this.settings.TAB_TIME * 1000);
   }
 
+  /**
+   * @returns {Worker}
+   */
   stop () {
     console.log('worker stopping');
     this.isRunning = false;
@@ -48,7 +65,7 @@ export default class Worker {
     this.tabHandler.getAllTabIds(tabId => {
       this.fadeIn(tabId);
     });
-    return false;
+    return this;
   }
 
   tick () {

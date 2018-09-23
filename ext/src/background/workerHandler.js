@@ -1,8 +1,9 @@
 import Worker from './Worker';
 import ChromeHelper from './utils/chrome';
 
-module.exports = (chrome) => {
+const workHandler = chrome => {
   const worker = new Worker(chrome);
+
   return {
     getValidTabsAndRun: async () => {
       const { validTabs, activeTabIndex } = await ChromeHelper.getValidTabsInActiveWindow();
@@ -12,9 +13,14 @@ module.exports = (chrome) => {
         return false;
       }
 
-      return worker.start(validTabs, activeTabIndex);
+      return worker
+      .setTabs(validTabs, activeTabIndex)
+      .start()
+      .getIsRunning();
     },
-    stop: async () => worker.stop(),
+    stop: async () => worker.stop().getIsRunning(),
     isRunning: () => worker.isRunning
   };
 };
+
+module.exports = workHandler;
