@@ -1,7 +1,7 @@
 import Worker from './Worker';
 import ChromeHelper from './utils/chrome';
 
-export default (chrome) => {
+module.exports = (chrome) => {
   const worker = new Worker(chrome);
   return {
     getValidTabsAndRun: async () => {

@@ -9,7 +9,7 @@ bindElements();
 
 sendMessage({ type: constants.POPUP_INIT }, resp => {
   console.log('response', resp);
-  toggleButtonText(resp.isRunning);
+  toggleButtonTextAndClass(resp.isRunning);
 });
 
 function bindElements () {
@@ -26,17 +26,20 @@ function bindElements () {
   };
 }
 
-function sendMessage (msg, cb) {
+function sendMessage (msg, callback) {
   console.log('sending message', msg);
-  chrome.extension.sendMessage(msg, cb);
+  chrome.extension.sendMessage(msg, callback);
 }
 
 function sendToggleStartStop () {
   sendMessage({ type: constants.TOGGLE_START_STOP }, resp => {
-    toggleButtonText(resp.isRunning);
+    toggleButtonTextAndClass(resp.isRunning);
   });
 }
 
-function toggleButtonText (isRunning) {
+function toggleButtonTextAndClass (isRunning) {
   button.innerHTML = isRunning ? 'Stop' : 'Start';
+  button.className = button.className
+    .replace(/ red| green/, '')
+    .concat(isRunning ? ' red' : ' green');
 }

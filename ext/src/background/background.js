@@ -15,12 +15,15 @@ const onMessage = (msg, sender, sendResponse) => {
 
     case constants.TOGGLE_START_STOP: {
       let promise;
-      if (isRunning) {
-        promise = workerHandler.stop();
-      } else {
+      if (!isRunning) {
         promise = workerHandler.getValidTabsAndRun();
+      } else {
+        promise = workerHandler.stop();
       }
-      promise.then(running => sendResponse({ isRunning: running }));
+
+      promise.then(running => {
+        return sendResponse({ isRunning: running });
+      });
       return true;
     }
   }

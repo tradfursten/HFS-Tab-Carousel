@@ -46,7 +46,7 @@ export default class Worker {
 
     //Fade in all tabs
     this.tabHandler.getAllTabIds(tabId => {
-      this.fadeIn(tabId, () => {});
+      this.fadeIn(tabId);
     });
     return false;
   }
