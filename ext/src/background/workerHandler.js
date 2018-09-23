@@ -14,9 +14,9 @@ const workHandler = (chrome, windowId) => {
       }
 
       return worker
-      .setTabs(validTabs, activeTabIndex)
-      .start()
-      .getIsRunning();
+        .setTabs(validTabs, activeTabIndex)
+        .start()
+        .getIsRunning();
     },
     stop: async () => worker.stop().getIsRunning(),
     isRunning: () => worker.isRunning

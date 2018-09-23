@@ -1,8 +1,8 @@
-import constants from 'root/shared/constants';
+import MessageTypes from 'root/shared/message-types';
 
 ((chrome, document) => {
+  const body = document.body;
   const run = () => {
-    const body = document.body;
     body.className = `${body.className} hfscarousel-hidden`;
 
     //Try to fix bug when page doesn't have opacity=0 when tab is activated
@@ -12,13 +12,12 @@ import constants from 'root/shared/constants';
   };
 
   chrome.extension.onMessage.addListener((msg) => {
-    const body = document.body;
     switch (msg.type) {
-      case constants.FADE_IN:
+      case MessageTypes.FADE_IN:
         body.className = body.className.replace(' hfscarousel-hidden', '');
         break;
 
-      case constants.FADE_OUT:
+      case MessageTypes.FADE_OUT:
         body.className = `${body.className} hfscarousel-hidden`;
         break;
     }

@@ -1,5 +1,5 @@
 import { setDefaultSettings } from 'root/shared/settings';
-import constants from 'root/shared/constants';
+import MessageTypes from 'root/shared/message-types';
 const getWorkHandler = require('./WorkerHandler');
 
 const windowWorkHandlers = {};
@@ -32,10 +32,10 @@ const onMessage = (msg, sender, sendResponse) => {
   const isRunning = windowWorkHandlers[windowId].isRunning();
 
   switch (msg.type) {
-    case constants.POPUP_INIT:
+    case MessageTypes.POPUP_INIT:
       return sendResponse({ isRunning });
 
-    case constants.TOGGLE_START_STOP: {
+    case MessageTypes.TOGGLE_START_STOP: {
       let promise;
       if (!isRunning) {
         promise = windowWorkHandlers[windowId].getValidTabsAndRun();

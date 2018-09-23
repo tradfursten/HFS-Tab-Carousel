@@ -1,5 +1,5 @@
 import './browser_action.html';
-import constants from 'root/shared/constants';
+import MessageTypes from 'root/shared/message-types';
 const $ = document.querySelector.bind(document);
 
 let button =  $('#toggleActiveBtn');
@@ -12,7 +12,7 @@ let windowId = null;
 chrome.windows.getCurrent(currentWindow => {
   windowId = currentWindow.id;
 
-  sendMessage({ type: constants.POPUP_INIT }, resp => {
+  sendMessage({ type: MessageTypes.POPUP_INIT }, resp => {
     console.log('response', resp);
     toggleButtonTextAndClass(resp.isRunning);
   });
@@ -38,7 +38,7 @@ function sendMessage (msg, callback) {
 }
 
 function sendToggleStartStop () {
-  sendMessage({ type: constants.TOGGLE_START_STOP }, resp => {
+  sendMessage({ type: MessageTypes.TOGGLE_START_STOP }, resp => {
     toggleButtonTextAndClass(resp.isRunning);
   });
 }

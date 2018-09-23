@@ -1,5 +1,5 @@
 import getSettings from 'root/shared/settings';
-import constants from 'root/shared/constants';
+import MessageTypes from 'root/shared/message-types';
 import TabHandler from './TabHandler';
 import getCss from './utils/getCssString';
 
@@ -90,7 +90,7 @@ export default class Worker {
   }
 
   fadeOut (tabId, onAfterFadeOut) {
-    this.chrome.tabs.sendMessage(tabId, { type: constants.FADE_OUT });
+    this.chrome.tabs.sendMessage(tabId, { type: MessageTypes.FADE_OUT });
 
     if (onAfterFadeOut) {
       this.timeoutId = setTimeout(onAfterFadeOut, this.settings.FADE_IN_OUT_TIME * 1000);
@@ -102,7 +102,7 @@ export default class Worker {
   }
 
   fadeIn (tabId, onAfterFadeIn) {
-    this.chrome.tabs.sendMessage(tabId, { type: constants.FADE_IN });
+    this.chrome.tabs.sendMessage(tabId, { type: MessageTypes.FADE_IN });
 
     if (onAfterFadeIn) {
       this.timeoutId = setTimeout(onAfterFadeIn, this.settings.FADE_IN_OUT_TIME * 1000);
