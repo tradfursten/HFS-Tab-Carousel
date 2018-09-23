@@ -1,12 +1,12 @@
 import Worker from './Worker';
 import ChromeHelper from './utils/chrome';
 
-const workHandler = chrome => {
+const workHandler = (chrome, windowId) => {
   const worker = new Worker(chrome);
 
   return {
     getValidTabsAndRun: async () => {
-      const { validTabs, activeTabIndex } = await ChromeHelper.getValidTabsInActiveWindow();
+      const { validTabs, activeTabIndex } = await ChromeHelper.getValidTabsInWindow(windowId);
 
       if (validTabs.length < 2) {
         alert('Not enough tabs found, aborting');

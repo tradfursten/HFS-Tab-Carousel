@@ -20,7 +20,6 @@ export default class Worker {
     this.settings = getSettings();
     console.log('Worker starting, settings:', this.settings);
     this.isRunning = true;
-    this.setChromeIcon('icons/icon19-running.png', 'Carousel running');
     this.bindChromeEvents();
     this.setTickTimeout();
     return this;
@@ -59,7 +58,6 @@ export default class Worker {
     this.isRunning = false;
     this.timeoutId = clearTimeout(this.timeoutId);
     this.unbindEvents();
-    this.setChromeIcon('icons/icon19-stopped.png', 'Carousel stopped');
 
     //Fade in all tabs
     this.tabHandler.getAllTabIds(tabId => {
@@ -116,12 +114,9 @@ export default class Worker {
   }
 
   reloadTabIfNeeded (tabId) {
-    console.log('reloadTabIfNeeded');
     const msecSinceReload = this.tabHandler.getMsecSinceReload(tabId);
-    console.log('lastReloaded:', msecSinceReload, 'reload setting:', this.settings.RELOAD_FREQUENCY * 1000);
 
     if (msecSinceReload > (this.settings.RELOAD_FREQUENCY * 1000)) {
-      console.log('Reloading tab', tabId);
       this.chrome.tabs.reload(tabId);
     }
   }
@@ -134,11 +129,6 @@ export default class Worker {
     this.chrome.tabs.onUpdated.addListener(this.onTabUpdated);
 
     this.chrome.tabs.onActivated.addListener(this.onTabActivated);
-  }
-
-  setChromeIcon (imagePath, title) {
-    this.chrome.browserAction.setIcon({ path: imagePath });
-    this.chrome.browserAction.setTitle({ title: title });
   }
 
   unbindEvents () {

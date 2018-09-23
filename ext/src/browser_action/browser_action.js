@@ -7,9 +7,15 @@ let settingsLink = $('#settingsLink');
 
 bindElements();
 
-sendMessage({ type: constants.POPUP_INIT }, resp => {
-  console.log('response', resp);
-  toggleButtonTextAndClass(resp.isRunning);
+let windowId = null;
+
+chrome.windows.getCurrent(currentWindow => {
+  windowId = currentWindow.id;
+
+  sendMessage({ type: constants.POPUP_INIT }, resp => {
+    console.log('response', resp);
+    toggleButtonTextAndClass(resp.isRunning);
+  });
 });
 
 function bindElements () {
@@ -27,8 +33,8 @@ function bindElements () {
 }
 
 function sendMessage (msg, callback) {
-  console.log('sending message', msg);
-  chrome.extension.sendMessage(msg, callback);
+  console.log('sending message', msg, windowId);
+  chrome.extension.sendMessage({ ...msg, windowId }, callback);
 }
 
 function sendToggleStartStop () {

@@ -1,13 +1,35 @@
 import { setDefaultSettings } from 'root/shared/settings';
 import constants from 'root/shared/constants';
-const workerHandler = require('./WorkerHandler')(chrome);
+const getWorkHandler = require('./WorkerHandler');
+
+const windowWorkHandlers = {};
+
+const onCloseWindow = windowId => {
+  if (windowWorkHandlers.hasOwnProperty(windowId)) {
+    delete windowWorkHandlers[windowId];
+  }
+};
+
+const setChromeIcon = (path, title) => {
+  chrome.browserAction.setIcon({ path });
+  chrome.browserAction.setTitle({ title });
+};
 
 /**
  * On message from browser popup
  */
 const onMessage = (msg, sender, sendResponse) => {
-  const isRunning = workerHandler.isRunning();
-  console.log('received msg:', { msg, sender });
+  const { windowId } = msg;
+  if (!windowId) {
+    alert('No window found');
+    return true;
+  }
+
+  if (!windowWorkHandlers.hasOwnProperty(windowId)) {
+    windowWorkHandlers[windowId] = getWorkHandler(chrome);
+  }
+
+  const isRunning = windowWorkHandlers[windowId].isRunning();
 
   switch (msg.type) {
     case constants.POPUP_INIT:
@@ -16,18 +38,25 @@ const onMessage = (msg, sender, sendResponse) => {
     case constants.TOGGLE_START_STOP: {
       let promise;
       if (!isRunning) {
-        promise = workerHandler.getValidTabsAndRun();
+        promise = windowWorkHandlers[windowId].getValidTabsAndRun();
       } else {
-        promise = workerHandler.stop();
+        promise = windowWorkHandlers[windowId].stop();
       }
 
       promise.then(isRunning => {
-        return sendResponse({ isRunning });
+        sendResponse({ isRunning });
+
+        if (!isRunning) {
+          setChromeIcon('icons/icon19-stopped.png', 'Carousel stopped');
+        } else {
+          setChromeIcon('icons/icon19-running.png', 'Carousel running');
+        }
       });
       return true;
     }
   }
 };
 
+chrome.windows.onRemoved.addListener(onCloseWindow);
 chrome.runtime.onInstalled.addListener(setDefaultSettings);
 chrome.runtime.onMessage.addListener(onMessage);
