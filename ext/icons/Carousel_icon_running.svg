@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="390px" height="390px" viewBox="0 0 390 390" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.1 (67048) - http://www.bohemiancoding.com/sketch -->
+    <title>Carousel_icon_running</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <ellipse id="path-1" cx="157" cy="147" rx="157" ry="147"></ellipse>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Carousel_icon_running">
+            <polygon id="Triangle" stroke="#979797" stroke-width="3" points="195 187 332 349 58 349"></polygon>
+            <g id="Triangle-+-Triangle-Copy-Mask" transform="translate(38.000000, 40.000000)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <g id="Mask"></g>
+                <polygon id="Triangle-Copy" stroke="#979797" stroke-width="4" mask="url(#mask-2)" transform="translate(157.000000, 69.500000) scale(1, -1) translate(-157.000000, -69.500000) " points="157 -8 294 147 20 147"></polygon>
+            </g>
+            <ellipse id="Oval" stroke="#47884F" stroke-width="9" cx="195" cy="187" rx="157" ry="147"></ellipse>
+            <rect id="Rectangle" stroke="#979797" x="0.5" y="0.5" width="389" height="389"></rect>
+        </g>
+    </g>
+</svg>
